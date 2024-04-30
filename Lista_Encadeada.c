@@ -24,11 +24,9 @@ void Lista_new(List *lista, int data_size, void (*free_data)(void *)) {
     lista->data_size = data_size;
     lista->free_data = free_data;
 }
-
 void Lista_delete(List *lista) {
     Node *current = lista->head;
     Node *next;
-
     while (current != NULL) {
         next = current->next;
         if (lista->free_data != NULL) {
@@ -38,7 +36,6 @@ void Lista_delete(List *lista) {
         free(current);
         current = next;
     }
-
     lista->head = NULL;
     lista->tail = NULL;
     lista->current = NULL;
@@ -59,37 +56,30 @@ void Lista_pushFront(List *lista, void *valor) {
         fprintf(stderr, "Memory allocation failed\n");
         exit(EXIT_FAILURE);
     }
-
     new_node->data = malloc(lista->data_size);
     if (new_node->data == NULL) {
         fprintf(stderr, "Memory allocation failed\n");
         exit(EXIT_FAILURE);
     }
-
     memcpy(new_node->data, valor, lista->data_size);
     new_node->next = lista->head;
-
     lista->head = new_node;
     if (lista->size == 0) {
         lista->tail = new_node;
     }
-
     lista->size++;
 }
-
 void Lista_pushBack(List *lista, void *valor) {
     Node *new_node = (Node *)malloc(sizeof(Node));
     if (new_node == NULL) {
         fprintf(stderr, "Memory allocation failed\n");
         exit(EXIT_FAILURE);
     }
-
     new_node->data = malloc(lista->data_size);
     if (new_node->data == NULL) {
         fprintf(stderr, "Memory allocation failed\n");
         exit(EXIT_FAILURE);
     }
-
     memcpy(new_node->data, valor, lista->data_size);
     new_node->next = NULL;
 
@@ -119,7 +109,6 @@ int Lista_search(List *lista, void *chave, void *dest, int (*cmp)(void *, void *
 void Lista_first(List *lista) {
     lista->current = lista->head;
 }
-
 void Lista_last(List *lista) {
     lista->current = lista->tail;
 }
@@ -141,7 +130,6 @@ void Lista_current(List *lista, void *dest) {
         exit(EXIT_FAILURE);
     }
 }
-
 void Lista_remove(List *lista, void *chave, int (*cmp)(void *, void *)) {
     Node *current = lista->head;
     Node *prev = NULL;
@@ -172,7 +160,6 @@ void Lista_remove(List *lista, void *chave, int (*cmp)(void *, void *)) {
         current = current->next;
     }
 }
-
 void Lista_insertAfter(List *lista, void *dado) {
     if (lista->current != NULL) {
         Node *new_node = (Node *)malloc(sizeof(Node));
@@ -186,7 +173,6 @@ void Lista_insertAfter(List *lista, void *dado) {
             fprintf(stderr, "Memory allocation failed\n");
             exit(EXIT_FAILURE);
         }
-
         memcpy(new_node->data, dado, lista->data_size);
         new_node->next = lista->current->next;
 
@@ -195,7 +181,6 @@ void Lista_insertAfter(List *lista, void *dado) {
         if (lista->current == lista->tail) {
             lista->tail = new_node;
         }
-
         lista->size++;
     } else {
         fprintf(stderr, "No current node\n");
@@ -203,7 +188,6 @@ void Lista_insertAfter(List *lista, void *dado) {
     }
 }
 
-// Exemplo de comparação de inteiros
 int cmp_int(void *a, void *b) {
     int *num_a = (int *)a;
     int *num_b = (int *)b;
@@ -215,7 +199,6 @@ int cmp_int(void *a, void *b) {
         return 1; // Chave 'a' maior que chave 'b'
     }
 }
-
 int main() {
     // Seu código principal aqui...
     return 0;
